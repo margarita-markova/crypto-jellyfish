@@ -1,0 +1,48 @@
+pipeline {
+    agent { 
+        docker { 
+            image 'hashicorp/terraform:light'
+            args '--entrypoint=\'\''
+        }
+    }
+    stages {
+        stage('Git SCM') {
+            steps {
+                git 'https://github.com/margarita-markova/crypto-jellyfish.git'
+                }
+        }
+        stage('TF init') {
+            steps {
+                dir("infra") {
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('TF plan') {
+            steps {
+                dir("infra") {
+                    sh "terraform plan"
+                }
+            }
+        }
+        stage('TF apply') {
+            steps {
+                dir("infra") {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+        // stage('TF destroy') {
+        //     steps {
+        //         dir("infra") {
+        //             sh 'terraform destroy -auto-approve '
+        //         }
+        //     }
+        // }
+    }
+    post {
+        always {
+            archiveArtifacts artifacts: 'infra/terraform.tfstate', fingerprint: true
+        }
+    }
+}
