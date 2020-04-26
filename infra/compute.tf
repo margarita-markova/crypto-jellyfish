@@ -2,7 +2,6 @@ resource "google_compute_instance" "slave" {
   count = var.slave_count
   name         = "geth-slave-${count.index}"
   machine_type = "f1-micro"
-  zone         = "us-central1-a"
 
   tags = ["slave"]
 
