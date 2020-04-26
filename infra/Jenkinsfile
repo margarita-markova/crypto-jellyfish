@@ -32,17 +32,11 @@ pipeline {
                 }
             }
         }
-        // stage('TF destroy') {
-        //     steps {
-        //         dir("infra") {
-        //             sh 'terraform destroy -auto-approve '
-        //         }
-        //     }
-        // }
     }
     post {
         always {
             archiveArtifacts artifacts: 'infra/terraform.tfstate', fingerprint: true
+            build 'upload-artifacts'
         }
     }
 }
