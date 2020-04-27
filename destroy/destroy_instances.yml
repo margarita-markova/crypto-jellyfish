@@ -1,0 +1,18 @@
+vars:
+  machines: &machines
+    - "geth-master"
+    - "geth-slave-0"
+    - "geth-slave-1"
+
+policies:
+  - name: destroy-instances
+    description: |
+      Stops all compute instances that are "geth*"
+    resource: gcp.instance-template
+    filters:
+      - type: value
+        key: name
+        op: in
+        value: *machines
+    actions:
+      - type: delete

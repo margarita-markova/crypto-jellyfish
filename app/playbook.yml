@@ -3,10 +3,12 @@
   hosts: master
 
   roles:
+    - common
     - geth-master
 
 - name: Deploy geth slaves
   hosts: slaves
 
   roles:
+    - common
     - geth-slave
