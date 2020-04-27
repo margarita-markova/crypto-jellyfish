@@ -1,0 +1,12 @@
+---
+- name: Deploy geth master
+  hosts: master
+
+  roles:
+    - geth-master
+
+- name: Deploy geth slaves
+  hosts: slaves
+
+  roles:
+    - geth-slave

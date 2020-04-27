@@ -12,14 +12,22 @@ def parse_tfstate():
 def create_inventory(data):
     inventory_file = open("../inventory", "w+")
     inventory_file.write("[master]\n")
-    inventory_file.write(data['outputs']['id_geth_master']['value'] + " ")
+    inventory_file.write(data['outputs']['id_geth_master']['value'] + " ansible_host=")
     inventory_file.write(data['outputs']['ip_geth_master']['value'] + "\n")
     inventory_file.write("\n")
     inventory_file.write("[slaves]\n")
-    slaves_arr = data['outputs']['id_geth_slave']['value']
-    slaves_ip_arr = data['outputs']['ip_geth_slave']['value']
+
+    slaves_arr = []
+    slaves_ip_arr = []
+    if isinstance(data['outputs']['id_geth_slave']['value'], str):
+        slaves_arr.append(data['outputs']['id_geth_slave']['value'])
+        slaves_ip_arr.append(data['outputs']['ip_geth_slave']['value'])
+    else:
+        slaves_arr = slaves_arr + data['outputs']['id_geth_slave']['value']
+        slaves_ip_arr = slaves_ip_arr + data['outputs']['ip_geth_slave']['value']
+
     for i in range(len(slaves_arr)):
-        inventory_file.write(slaves_arr[i] + " ")
+        inventory_file.write(slaves_arr[i] + " ansible_host=")
         inventory_file.write(slaves_ip_arr[i] + "\n")
 
 
