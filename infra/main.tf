@@ -4,12 +4,8 @@ provider "google" {
   zone        = "us-central1-a"
 }
 
-resource "random_id" "instance_id" {
- byte_length = 8
-}
-
 resource "google_compute_instance" "default" {
- name         = "geth-master-${random_id.instance_id.hex}"
+ name         = "geth-master"
  machine_type = "f1-micro"
 
  tags = ["master"]
