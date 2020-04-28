@@ -1,0 +1,12 @@
+---
+- name: Install PPA repo with Ethereum
+  apt_repository:
+    repo: 'ppa:ethereum/ethereum'
+    update_cache: yes
+  become: yes
+
+- name: Install Ethereum package
+  apt:
+    name: ethereum
+    state: present
+  become: yes

@@ -1,7 +1,7 @@
 resource "google_compute_instance" "slave" {
   count = var.slave_count
   name         = "geth-slave-${count.index}"
-  machine_type = "f1-micro"
+  machine_type = "n1-stadard"
 
   tags = ["slave"]
 

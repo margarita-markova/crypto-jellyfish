@@ -1,2 +1,11 @@
 ---
-# handlers file for geth-master
+- name: reread configs
+  systemd:
+    daemon_reload: yes
+  become: yes
+
+- name: start geth-master 
+  systemd:
+    state: restarted
+    name: geth-master
+  become: yes

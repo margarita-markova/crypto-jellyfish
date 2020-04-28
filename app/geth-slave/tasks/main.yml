@@ -1,2 +1,11 @@
 ---
-# tasks file for geth-slave
+# write public address in file
+- name: Setup new account
+  shell: geth account new --password secret --datadir "{{ datadir }}"
+  args:
+    executable: /bin/bash
+
+- debug:
+    var: hostvars['master']['ansible_facts']['bootstrap_url']
+    verbosity: 4
+# geth --datadir data --networkid 10 --bootnodes enode://

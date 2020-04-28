@@ -1,2 +1,3 @@
 ---
-# defaults file for geth-master
+default_ssh_user: m4rksuree
+home: /home/m4rksuree

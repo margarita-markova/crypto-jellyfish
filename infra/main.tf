@@ -6,7 +6,7 @@ provider "google" {
 
 resource "google_compute_instance" "default" {
  name         = "geth-master"
- machine_type = "f1-micro"
+ machine_type = "n1-standard"
 
  tags = ["master"]
 

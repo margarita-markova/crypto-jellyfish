@@ -1,3 +1,4 @@
 .idea/
 inventory
 tfstate_parser/terraform.tfstate
+secretfile_with_password

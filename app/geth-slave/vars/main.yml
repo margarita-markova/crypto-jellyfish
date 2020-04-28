@@ -1,2 +1,3 @@
 ---
-# vars file for geth-slave
+datadir: /home/m4rksuree/data
+network_id: 10
