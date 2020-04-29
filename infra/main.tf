@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("account.json")
+  # credentials = file("account.json")
   project     = "cryptojellyfish"
   region      = "us-central1"
   zone        = "us-central1-a"
