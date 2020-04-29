@@ -1,2 +1,11 @@
 ---
-# handlers file for geth-slave
+- name: reread configs
+  systemd:
+    daemon_reload: yes
+  become: yes
+
+- name: start geth-slave
+  systemd:
+    state: restarted
+    name: geth-slave
+  become: yes

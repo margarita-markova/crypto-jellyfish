@@ -6,6 +6,33 @@
     executable: /bin/bash
 
 - debug:
-    var: hostvars['master']['ansible_facts']['bootstrap_url']
-    verbosity: 4
+    var: hostvars[groups['master'][0]].bootstrap_url
+
+# create .sh to add in service
+# JENKINS CHANGE IP ansible_default_ipv4.address
+- name: Create executable starter of bootstrap node
+  shell: |
+    echo "#!/bin/bash" > "{{ home }}/{{ exec_script }}"
+    echo -e "\n /usr/bin/geth --datadir {{ datadir }} --networkid {{ network_id }} --bootnodes {{ hostvars[groups['master'][0]].bootstrap_url }}" >> "{{ home }}/{{ exec_script }}"
+  args:
+    executable: /bin/bash
+
+# change permissions
+- name: Change mode and permissions of starter
+  file:
+    path: "{{ home }}/{{ exec_script }}"
+    mode: '755'
+    group: "{{ default_ssh_user }}"
+    owner: "{{ default_ssh_user }}"
+    state: file
+
+# create service
+- name: Create bootstrap node service
+  template:
+    src: geth-slave.service.j2
+    dest: /etc/systemd/system/geth-slave.service
+  become: yes
+  notify:
+    - reread configs 
+    - start geth-slave
 # geth --datadir data --networkid 10 --bootnodes enode://

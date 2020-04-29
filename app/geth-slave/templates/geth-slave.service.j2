@@ -1,0 +1,9 @@
+[Unit]
+Description=Geth slave node service
+
+[Service]
+Type=simple
+ExecStart=/bin/bash {{ home }}/{{ exec_script }}
+
+[Install]
+WantedBy=multi-user.target
