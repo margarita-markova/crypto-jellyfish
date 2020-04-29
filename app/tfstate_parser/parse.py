@@ -32,5 +32,5 @@ def create_inventory(data):
 
 
 if __name__ == "__main__":
-    download_tfstate('https://storage.googleapis.com/tfstate-storage/infra/terraform.tfstate')
+    download_tfstate('https://storage.cloud.google.com/tfstate-storage/infra/terraform.tfstate')
     parse_tfstate()
