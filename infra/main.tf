@@ -1,4 +1,5 @@
 provider "google" {
+  credentials = file("account.json")
   project     = "cryptojellyfish"
   region      = "us-central1"
   zone        = "us-central1-a"
@@ -6,7 +7,7 @@ provider "google" {
 
 resource "google_compute_instance" "default" {
  name         = "geth-master"
- machine_type = "n1-standard"
+ machine_type = "n1-standard-1"
 
  tags = ["master"]
 
@@ -21,4 +22,9 @@ resource "google_compute_instance" "default" {
 
   access_config {}
   }
+
+  metadata = {
+    ssh-keys = "${var.ssh_user}:${var.ssh_public_key}"
+  }
 }
+

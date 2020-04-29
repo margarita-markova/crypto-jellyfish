@@ -1,7 +1,7 @@
-Role Name
+geth-slave
 =========
 
-A brief description of the role goes here.
+This role needs for private network creating. It is the part of educational project. For testing purposes, slaves connected to master automatically using systemd service. 
 
 Requirements
 ------------

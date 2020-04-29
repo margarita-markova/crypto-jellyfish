@@ -1,5 +1,4 @@
 ---
-# write public address in file
 - name: Setup new account
   shell: geth account new --password secret --datadir "{{ datadir }}"
   args:
@@ -8,8 +7,6 @@
 - debug:
     var: hostvars[groups['master'][0]].bootstrap_url
 
-# create .sh to add in service
-# JENKINS CHANGE IP ansible_default_ipv4.address
 - name: Create executable starter of bootstrap node
   shell: |
     echo "#!/bin/bash" > "{{ home }}/{{ exec_script }}"
@@ -17,7 +14,6 @@
   args:
     executable: /bin/bash
 
-# change permissions
 - name: Change mode and permissions of starter
   file:
     path: "{{ home }}/{{ exec_script }}"
@@ -26,7 +22,6 @@
     owner: "{{ default_ssh_user }}"
     state: file
 
-# create service
 - name: Create bootstrap node service
   template:
     src: geth-slave.service.j2
@@ -35,4 +30,3 @@
   notify:
     - reread configs 
     - start geth-slave
-# geth --datadir data --networkid 10 --bootnodes enode://

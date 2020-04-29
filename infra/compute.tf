@@ -1,7 +1,7 @@
 resource "google_compute_instance" "slave" {
   count = var.slave_count
   name         = "geth-slave-${count.index}"
-  machine_type = "n1-stadard"
+  machine_type = "n1-standard-1"
 
   tags = ["slave"]
 
@@ -15,5 +15,9 @@ resource "google_compute_instance" "slave" {
   network = "default"
 
   access_config {}
+  }
+
+  metadata = {
+    ssh-keys = "${var.ssh_user}:${var.ssh_public_key}"
   }
 }

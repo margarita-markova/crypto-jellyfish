@@ -1,6 +1,5 @@
 ---
 datadir: /home/m4rksuree/data
 network_id: 10
-ext_ip: 35.223.18.87
 balance: 300000
 exec_script: start-geth-master.sh

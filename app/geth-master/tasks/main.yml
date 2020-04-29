@@ -1,7 +1,7 @@
 ---
 # JENKINS CHANGE secret file
 - name: Setup new account
-  shell: geth account new --password secret --datadir data | grep Public | awk '{print $6}' | cut -c 3-
+  shell: geth account new --password {{ secret_file }} --datadir data | grep Public | awk '{print $6}' | cut -c 3-
   args:
     executable: /bin/bash
   register: account_result
@@ -10,7 +10,6 @@
   set_fact:
     signer_address: "{{ account_result.stdout }}"
 
-# JENKINS CHANGE add here user jenkins, mode 644, dest WORKSPACE
 - name: Provide genesis file
   template:
     src: genesis.json.j2
@@ -27,11 +26,10 @@
 - name: Create executable starter of bootstrap node
   shell: |
     echo "#!/bin/bash" > "{{ home }}/{{ exec_script }}"
-    echo -e "\n /usr/bin/geth --datadir {{ datadir }} --networkid {{ network_id }} --nat extip:{{ ext_ip }}" >> "{{ home }}/{{ exec_script }}"
+    echo -e "\n /usr/bin/geth --datadir {{ datadir }} --networkid {{ network_id }} --nat extip:{{ ansible_facts['ansible_default_ipv4']['address'] }}" >> "{{ home }}/{{ exec_script }}"
   args:
     executable: /bin/bash
 
-# change permissions
 - name: Change mode and permissions of starter
   file:
     path: "{{ home }}/{{ exec_script }}"
@@ -40,7 +38,6 @@
     owner: "{{ default_ssh_user }}"
     state: file
 
-# create service
 - name: Create bootstrap node service
   template:
     src: geth-master.service.j2
