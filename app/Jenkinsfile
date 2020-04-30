@@ -17,11 +17,6 @@ pipeline {
                 }
             }
         }
-        stage('Waiting while machines up') {
-            steps {
-                sh 'sleep 60'
-            }
-        }
         stage('Run ansible playbook') {
             steps {
                 dir("app") {
