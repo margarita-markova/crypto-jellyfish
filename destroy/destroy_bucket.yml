@@ -1,0 +1,12 @@
+policies:
+  - name: destroy-bucket
+    description: |
+      Remove tfstate-storage bucket
+    resource: gcp.bucket
+    filters:
+      - type: value
+        key: name
+        value: tfstate-storage
+        op: in
+    actions:
+      - type: delete
