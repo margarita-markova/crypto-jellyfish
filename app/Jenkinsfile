@@ -13,6 +13,7 @@ pipeline {
         stage('Create inventory') {
             steps {
                 dir("app/tfstate_parser") {
+                    sh 'sudo gsutil cp gs://tfstate-storage/infra/terraform.tfstate .'
                     sh 'sudo python3 parse.py'
                 }
             }
