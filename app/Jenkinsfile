@@ -23,6 +23,14 @@ pipeline {
                 dir("app") {
                     sshagent (credentials: ['jenkins-ssh']) {
                         withCredentials([file(credentialsId: 'secret-eth', variable: 'password_file')]) {
+                            try {
+                                sh '''
+                                    cat inventory
+                                    ansible-playbook -vvv playbook.yml -i $WORKSPACE/app/inventory -u jenkins --extra-vars "secret=$password_file"
+                                   '''
+                            } catch (err) {
+                                echo err.getMessage()
+                            }
                             sh '''
                             cat inventory
                             ansible-playbook -vvv playbook.yml -i $WORKSPACE/app/inventory -u jenkins --extra-vars "secret=$password_file"
