@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+        // docker { 
+        //     image 'ansible/ansible:ubuntu1604py3'
+        //     args '--entrypoint=\'\''
+        // }
+    stages {
+        stage('Git SCM') {
+            steps {
+                git 'https://github.com/margarita-markova/crypto-jellyfish.git'
+            }
+        }
+        stage('Create inventory') {
+            steps {
+                dir("app/tfstate_parser") {
+                    sh 'sudo python3 parse.py'
+                }
+            }
+        }
+        stage('Run ansible playbook') {
+            steps {
+                dir("app") {
+                    sshagent (credentials: ['jenkins-ssh']) {
+                        withCredentials([file(credentialsId: 'secret-eth', variable: 'password_file')]) {
+                            sh '''
+                            ansible-playbook -v playbook.yml -i $WORKSPACE/app/inventory -u jenkins --extra-vars "secret=$password_file"
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
