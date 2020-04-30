@@ -16,7 +16,7 @@
   become: yes
 
 - name: Setup new account
-  shell: geth account new --password {{ secret_file }} --datadir data | grep Public | awk '{print $6}' | cut -c 3-
+  shell: geth account new --password {{ passwd_dir }}/secret --datadir data | grep Public | awk '{print $6}' | cut -c 3-
   args:
     executable: /bin/bash
   register: account_result
