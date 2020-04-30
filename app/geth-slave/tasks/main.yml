@@ -19,6 +19,7 @@
   shell: geth account new --password {{ passwd_dir }}/secret --datadir "{{ datadir }}"
   args:
     executable: /bin/bash
+  become: yes
 
 - debug:
     var: hostvars[groups['master'][0]].bootstrap_url

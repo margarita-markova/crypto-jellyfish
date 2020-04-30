@@ -20,6 +20,7 @@
   args:
     executable: /bin/bash
   register: account_result
+  become: yes
 
 - name: Set fact (signer address)
   set_fact:
@@ -35,6 +36,7 @@
   args:
     executable: /bin/bash
   register: db_res
+  become: yes
 
 - name: Create executable starter of bootstrap node
   shell: |
