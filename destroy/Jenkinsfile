@@ -1,0 +1,28 @@
+pipeline {
+    agent none
+    stages {
+        stage('Remove instances') {
+            environment {
+                CLOUDSDK_CORE_PROJECT = 'cryptojellyfish'
+            }
+            agent { 
+                docker { 
+                    image 'cloudcustodian/c7n'
+                    args '--entrypoint=\'\''
+                }
+            }
+            steps {
+                git 'https://github.com/margarita-markova/crypto-jellyfish.git'
+                dir("destroy") {
+                    sh 'custodian run --output-dir=. destroy_instances.yml'
+                }
+            }
+        }
+        stage('Remove bucket') {
+            agent any
+            steps {
+                sh 'gsutil -m rm -r gs://tfstate-storage'
+            }
+        }
+    }
+}
