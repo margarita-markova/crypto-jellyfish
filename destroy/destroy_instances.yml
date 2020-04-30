@@ -8,7 +8,7 @@ policies:
   - name: destroy-instances
     description: |
       Stops all compute instances that are "geth*"
-    resource: gcp.instance-template
+    resource: gcp.instance
     filters:
       - type: value
         key: name
