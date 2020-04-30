@@ -1,5 +1,4 @@
 ---
-# JENKINS CHANGE secret file
 - name: Setup new account
   shell: geth account new --password {{ secret_file }} --datadir data | grep Public | awk '{print $6}' | cut -c 3-
   args:
@@ -21,8 +20,6 @@
     executable: /bin/bash
   register: db_res
 
-# create .sh to add in service
-# JENKINS CHANGE IP ansible_default_ipv4.address
 - name: Create executable starter of bootstrap node
   shell: |
     echo "#!/bin/bash" > "{{ home }}/{{ exec_script }}"

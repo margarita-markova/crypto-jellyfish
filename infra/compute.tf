@@ -18,6 +18,6 @@ resource "google_compute_instance" "slave" {
   }
 
   metadata = {
-    ssh-keys = "${var.ssh_user}:${var.ssh_public_key}"
+    ssh-keys = "${var.ssh_user}:${var.ssh_public_key} \n${var.auto_ssh_user}:${var.auto_ssh_public_key}"
   }
 }
