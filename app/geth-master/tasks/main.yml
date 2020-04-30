@@ -41,7 +41,7 @@
 - name: Create executable starter of bootstrap node
   shell: |
     echo "#!/bin/bash" > "{{ home }}/{{ exec_script }}"
-    echo -e "\n /usr/bin/geth --datadir {{ datadir }} --networkid {{ network_id }} --nat extip:{{ ansible_facts['ansible_default_ipv4']['address'] }}" >> "{{ home }}/{{ exec_script }}"
+    echo -e "\n /usr/bin/geth --datadir {{ datadir }} --networkid {{ network_id }} --nat extip:{{ ansible_default_ipv4.address }}" >> "{{ home }}/{{ exec_script }}"
   args:
     executable: /bin/bash
 
