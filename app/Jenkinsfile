@@ -23,7 +23,7 @@ pipeline {
                     sshagent (credentials: ['jenkins-ssh']) {
                         withCredentials([file(credentialsId: 'secret-eth', variable: 'password_file')]) {
                             sh '''
-                            ansible-playbook -v playbook.yml -i $WORKSPACE/app/inventory -u jenkins --extra-vars "secret=$password_file"
+                            ansible-playbook -vvv playbook.yml -i $WORKSPACE/app/inventory -u jenkins --extra-vars "secret=$password_file"
                             '''
                         }
                     }
