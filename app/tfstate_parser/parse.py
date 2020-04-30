@@ -1,9 +1,4 @@
-import requests
 import json
-
-def download_tfstate(url):
-    r = requests.get(url, allow_redirects=True)
-    open('terraform.tfstate', 'wb').write(r.content)
 
 def parse_tfstate():
     with open("terraform.tfstate", "r") as tfstate:
@@ -33,5 +28,4 @@ def create_inventory(data):
 
 
 if __name__ == "__main__":
-    download_tfstate('https://storage.googleapis.com/tfstate-storage/infra/terraform.tfstate')
     parse_tfstate()
