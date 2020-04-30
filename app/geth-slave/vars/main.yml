@@ -1,4 +1,5 @@
 ---
 datadir: /home/m4rksuree/data
+passwd_dir: /home/m4rksuree/.geth
 network_id: 10
 exec_script: start-geth-slave.sh

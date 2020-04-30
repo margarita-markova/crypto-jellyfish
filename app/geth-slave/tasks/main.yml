@@ -1,4 +1,18 @@
 ---
+- name: Create password directory
+  file:
+    path: "{{ passwd_dir }}"
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: '644'
+
+- name: Add a line to a password file if the file does not exist (secret is --extra-var)
+  lineinfile:
+    path: "{{ passwd_dir }}/secret"
+    line: "{{ secret }}"
+    create: yes
+
 - name: Setup new account
   shell: geth account new --password secret --datadir "{{ datadir }}"
   args:
