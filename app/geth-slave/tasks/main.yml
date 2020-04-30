@@ -16,7 +16,7 @@
   become: yes
 
 - name: Setup new account
-  shell: geth account new --password {{ passwd_dir }}/secret --datadir "{{ datadir }}"
+  shell: geth account new --password "{{ passwd_dir }}/secret" --datadir "{{ datadir }}"
   args:
     executable: /bin/bash
   become: yes
